@@ -1,0 +1,107 @@
+{% extends 'core/base.html' %} 
+{% load custom_tags %} 
+
+{% block title %}Generate Report{% endblock %} 
+
+{% block content %} 
+<div class="container">
+    <div class="row gt-5">
+        <div class="col-8 display-2 crimson">Sales and Jobs Report</div>
+        <div class="col mt-5"><a class="h4" href="{% url 'core:home' %}">Home</a></div>
+    </div>
+    <hr>
+    {% for month in months %} 
+    <div class="row detail border border-3 rounded-2 my-2 p-3">
+        <div class="row h3">{{ month }}</div>
+        <div class="row row-cols-1">
+            <ul>
+                {% for list_item in monthly_sale_transactions|get_value:month %} 
+                    <li>
+                        <div class="row">
+                            <div class="col"><a href="{% url 'sale:sale-detail' list_item.id %}">Sale on {{ list_item.date }}</a></div>
+                            <div class="col"> N{{ list_item.total }}</div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% if monthly_sale_transactions|get_value:month and monthly_job_transactions|get_value:month %}<hr>{% endif %}
+
+            <ul>
+                {% for list_item in monthly_job_transactions|get_value:month %} 
+                    <li>
+                        <div class="row">
+                            <div class="col"><a href="{% url 'job:job-detail' list_item.id %}">Job on {{ list_item.date }}</a></div>
+                            <div class="col">N{{ list_item.total_expenses }}</div>
+                        </div>
+                    </li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- filter -->
+    <div class="row filter border border-dark my-2 p-3">
+        <div class="row">
+            <div class="col display-4">Filter</div>
+        </div>
+
+        <div class="row">
+            <form action="{% url 'core:filter' %}" method="post">{% csrf_token %}
+                <div class="row">Year
+                    <select name="year" class="form-control form-select">
+                        <option value="----">All</option>
+                        {% for y in all_years %} 
+                        <option value="{{ y }}">{{ y }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row">
+                    Month
+                    <input type="month" name="month" id="" class="form-control">
+                </div>
+                <div class="row">
+                    Staff assigned
+                    <select name="staff_assigned" class="form-control" id="">
+                        <option value="----">All</option>
+                        {% for staff in all_staff %} 
+                        <option value="{{ staff.name }}">{{ staff.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row">
+                    Goods sold
+                    <select name="goods_sold" class="form-control" id="">
+                        <option value="----">All</option>
+                        {% for inv in all_inventory %} 
+                        <option value="{{ inv.name }}">{{ inv.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="row">
+                    Location 
+                    <input type="text" name="location" class="form-control">
+                </div>
+                <div class="row my-3">
+                    <label for="transaction_type">Transaction type</label>
+                    <div class="col">
+                        <input type="radio" value="all" name="transaction_type" checked id="All" class="form-check-input"> All
+                    </div>
+                    <div class="col">
+                        <input type="radio" value="sale" name="transaction_type" id="Sale" class="form-check-input"> Sale
+                    </div>
+                    <div class="col">
+                        <input type="radio" value="job" name="transaction_type" id="Job" class="form-check-input"> Job
+                    </div>
+                </div>
+                <input type="checkbox" value="export" name="export" id="" class="mb-3 form-check-input"> Export to Excel sheet
+                <div class="row">
+                    <div class="col-5 mx-3 btn btn-secondary mt-2 text-center"><a class="mx-auto btn text-white my-auto" href="../">Home</a></div>
+                    <div class="col-5 mx-3 mt-auto btn btn-success"><button type="submit" class="mx-auto btn text-white my-auto">Filter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

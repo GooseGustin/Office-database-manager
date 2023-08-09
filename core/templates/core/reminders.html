@@ -1,0 +1,111 @@
+{% extends 'core/base.html' %} 
+{% load static %}
+{% block title %}Reminders{% endblock %} 
+
+
+{% block content %} 
+
+<div class="container">
+    <form action="{% url 'core:reminder-handle' %}" method="post">{% csrf_token %} 
+    <div class="row g-3">
+        <div class="col display-1">Reminders</div>
+        <div class="col-3 mt-5">
+            <a class="h4" href="{% url 'core:home' %}">Home</a>
+        </div>
+        <div class="col-2 mt-5">
+            <button type="submit" class="btn btn-success btn-lg">Save</button>
+        </div>
+    </div>
+    <hr>
+
+    <div class="h2">
+        Battery Refill Reminders
+    </div>
+    <table class="table">
+        <tr class="">
+            <th>Customer name</th>
+            <th>Location</th>
+            <th>Transaction</th>
+            <th>Last Refill</th>
+            <th>Handled</th>
+            <th class="text-muted">Forget</th>
+        </tr>
+        {% for rem in refill_reminders %} 
+        {% if rem.sale %}
+            <tr>
+                <td>{{ rem.sale.customer_name }}</td>
+                <td></td>
+                <td><a href="{% url 'sale:sale-detail' rem.sale.id %}">{{ rem.sale.date }}</a></td>
+                <td>{{ rem.last_refill_date }}</td>
+                <td><input type="checkbox" name="refill_handle_{{ rem.id }}" class="form-check-input"></td>
+                <td><input type="checkbox" name="refill_forget_{{ rem.id }}" class="form-check-input"></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td>{{ rem.job.customer_name }}</td>
+                <td>{{ rem.job.location|title }}</td>
+                <td><a href="{% url 'job:job-detail' rem.job.id %}">{{ rem.job.date }}</a></td>
+                <td>{{ rem.last_refill_date }}</td>
+                <td><input type="checkbox" name="refill_handle_{{ rem.id }}" class="form-check-input"></td>
+                <td><input type="checkbox" name="refill_forget_{{ rem.id }}" class="form-check-input"></td>
+            </tr>
+        {% endif %}
+        {% endfor %}
+    </table>
+    
+    <div class="h2">Maintenance Reminders</div>
+    <table class="table">
+        <tr>
+            <th>Customer name</th>
+            <th>Location</th>
+            <th>Job</th>
+            <th>Last Maintenance</th>
+            <th>Handled</th>
+            <th class="text-muted">Forget</th>
+        </tr>
+        {% for rem in maintenance_reminders %} 
+            <tr>
+                <td>{{ rem.job.customer_name }}</td>
+                <td>{{ rem.job.location|title }}</td>
+                <td><a href="{% url 'job:job-detail' rem.job.id %}">{{ rem.job.date }}</a></td>
+                <td>{{ rem.last_maintenance_date }}</td>
+                <td><input type="checkbox" name="maintain_handle_{{ rem.id }}" class="form-check-input"></td>
+                <td><input type="checkbox" name="maintain_forget_{{ rem.id }}" class="form-check-input"></td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+    <div class="h2">Expired Warranty Reminders</div>
+    <table class="table">
+        <tr>
+            <th>Customer name</th>
+            <th>Product</th>
+            <th>Serial number</th>
+            <th>Transaction</th>
+            <th class="text-muted">Forget</th>
+        </tr>
+        {% for rem in sale_warranty_reminders %} 
+        <tr>
+            <td>{{ rem.sale.customer_name }}</td>
+            <td>{{ rem.product }}</td>
+            <td>{{ rem.serial_no }}</td>
+            <td><a href="{% url 'sale:sale-detail' rem.sale.id %}">{{ rem.sale.date }}</a></td>
+            <td><input type="checkbox" name="warranty_handle_{{ rem.id }}" class="form-check-input"></td>
+            <!-- <td><input type="checkbox" name="warranty_forget_{{ rem.id }}" class="form-check-input"></td> -->
+        </tr>
+        {% endfor %}
+
+        {% for rem in job_warranty_reminders %} 
+        <tr>
+            <td>{{ rem.job.customer_name }}</td>
+            <td>{{ rem.product }}</td>
+            <td>{{ rem.serial_no }}</td>
+            <td><a href="{% url 'job:job-detail' rem.job.id %}">{{ rem.job.date }}</a></td>
+            <td><input type="checkbox" name="warranty_handle_{{ rem.id }}" class="form-check-input"></td>
+            <!-- <td><input type="checkbox" name="warranty_forget_{{ rem.id }}" class="form-check-input"></td> -->
+        </tr>
+        {% endfor %}
+    </table>
+    </form>
+</div>
+{% endblock %} 

@@ -1,0 +1,62 @@
+{% extends 'core/base.html' %} 
+{% load static %}
+{% block title %}Home{% endblock %} 
+
+{% block style %}
+<style>
+    body {
+        background-image: url({% static 'images/legend_back.png' %});
+        background-repeat: no-repeat; 
+    }
+    a { 
+        color: purple;
+    }
+</style>
+{% endblock %}
+
+{% block content %} 
+<div class="container">
+    <div class="row display-4 text- title">
+        <div class="col"><img src="{% static 'images/legendary-logo-small.jpg' %}" alt="legendary logo">
+        </div>
+        <div class="col-7 text-end">D-LEGENDARY ENERGY CONCEPT</div>
+    </div>
+    <hr>
+    <div class="row row-cols-1 navigation h3 crimson text-center">
+        <div class="col display-5">
+            <a href="{% url 'staff:staff-list' %}">Staff</a>
+        </div>
+        <div class="col display-5">
+            <a href="{% url 'inventory:inventory-list' %}">Inventory</a>
+        </div>
+        <div class="col display-5">
+            <a href="{% url 'sale:sale-list' %}">Sales</a>
+        </div>
+        <div class="col display-5">
+            <a href="{% url 'job:job-list' %}">Jobs</a>
+        </div>
+        <div class="col display-5">
+            <a href="{% url 'core:report' %}">Report</a>
+        </div>
+        <div class="col display-5">
+            <a href="{% url 'core:reminder' %}">Reminders</a>
+        </div>
+        
+    </div>
+
+    <!-- <p>
+        OBJECTIVES 
+    </p>
+    <p>
+        HIGHLIGHTS OF JOBS DONE 
+        <img src="{% static 'images/serena.jpg' %}" alt="" srcset="">
+    </p>
+    <p>
+        IMAGES OF PRODUCTS ON SALE 
+    </p>
+    <p>
+        PHOTOS OF STAFF 
+    </p> -->
+</div>
+
+{% endblock %}  

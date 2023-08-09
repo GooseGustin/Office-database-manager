@@ -1,0 +1,85 @@
+{% extends 'core/base.html' %}
+
+{% block card-title %}Help Page{% endblock %} 
+
+{% block content %}
+<div class="container">
+    <div class="card my-3">
+        <div class="card-body">
+            <h3 class="card-title crimson">Staff</h3>
+            <div class="card-text">
+                <p>Name and phone number of newly registered staff are required.</p>
+                <p>Take care to enter staff names correctly the first time before selecting them when recording jobs because updating the names afterwards may make it difficult to search for jobs using their former names.</p>
+                <p>After deactivating a staff, close and restart the program for the changes to be reflected throughout the site if it does not do so immediately, then refresh the page.</p>
+                <p>Deactivated staff will not show up as options for staff assigned to a job.</p>
+            </div>
+        </div>
+    </div>
+    <div class="card my-3">
+        <div class="card-body">
+            <h3 class="card-title crimson">Inventory</h3>
+            <div class="card-text">
+                <p>The warranty periods of the inventory is not required for each inventory. Batteries and inverters should have warranty periods so that a reminder appear when the product is out of warranty.</p>
+                <p>If an inventory is no longer required, update the inventory record by selecting Deactivate.</p>
+                <p>After deactivating an inventory, close and restart the program for the changes to be reflected throughout the site if it does not do so immediately, then refresh the page.</p>
+                <p>If you deactivate an inventory, it will no longer show up as an option when recording sales or jobs until it is activated again.</p>
+            </div>
+        </div>
+    </div>
+    <div class="card my-3">
+        <div class="card-body">
+            <h3 class="card-title crimson">Sales</h3>
+            <div class="card-text">
+                <p>Sales must contain goods sold, including the unit price and quantity sold.</p>
+                <p>If no date is specified, the current date is taken as default.</p>
+            </div>
+        </div>
+    </div>
+    <div class="card my-3">
+        <div class="card-body">
+            <h3 class="card-title crimson">Jobs</h3>
+            <div class="card-text"> 
+                <p>Jobs must contain staff assigned, date, nature of the job and transport fare. If no date is specified, the current date is taken as default.</p>
+            </div>
+        </div>
+    </div>
+    <div class="card my-3">
+        <div class="card-body">
+            <h3 class="card-title crimson">Report</h3>
+            <div class="card-text">
+                <p>Sales and jobs can be filtered by year, month, staff assigned, goods sold, location, transaction type, and by any combination.</p>
+                <p>When filtering by month, although the year appears beside the month, only the month is considered.</p>
+                <p>When the 'Export to Excel' option is selected before filtering, an MS Excel file is created which contains the report of the sales and jobs as specified by the filter parameters. The file is saved in the Documents folder.</p>
+            </div>
+        </div>
+    </div>
+    <div class="card my-3">
+        <div class="card-body">
+            <h3 class="card-title crimson">Reminders</h3>
+            <div class="card-text">
+                <p>A battery refill reminder will appear 6 months after the job or sale occured in which the batteries were sold.</p>
+                <p>A maintenance reminder will appear 12 months after the panel installation.</p>
+                <p>An expired warranty reminder will appear after the warranty period of the battery has passed.</p>
+                <p>When a Battery Refill reminder is 'handled', the last refill date of the batteries in the sale or job is updated to the current date. The reminder will show up again in 6 months.</p>
+                <p> When a Maintenance reminder is 'handled', the last maintenance date of the panel installation is updated to the current date. The reminder will show up again in 12 months. </p>
+                <p>Any reminders that are 'forgotten' will not be shown again. Only select this if the reminder will never be necessary in future.</p>
+            </div>
+        </div>
+    </div>
+    <div class="card my-3">
+        <div class="card-body">
+            <h4 class="card-title crimson">Further help</h4>
+        <div class="card-text">
+            <p>For further assistance or in case of any difficulties, contact Mafeng at <a href="mailto:pammafeng11@gmail.com">pammafeng11@gmail.com</a></p>
+        </div>
+        </div>
+    </div>
+    <div class="hidden">
+        <p>Superuser Details</p>
+        <p>Username: legend</p>
+        <p>Email: info@dlegendary.com</p>
+        <p>Password: mohammedkola</p>
+    </div>
+</div>
+
+{% endblock %}
