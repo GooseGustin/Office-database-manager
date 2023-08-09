@@ -1,0 +1,32 @@
+{% extends './base.html' %} 
+
+{% block title %}Staff List{% endblock %} 
+
+{% block content %} 
+<div class="container">
+
+    <div class="row g-3">
+        <div class="col display-1">All Staff</div>
+        <div class="col mt-5"><a class="h4" href="{% url 'staff:staff-create' %}">Add New Staff</a></div>
+        <div class="col mt-5"><a class="h4" href="{% url 'core:home' %}">Home</a></div>
+    </div>
+
+    <hr>
+
+    <div class="staff my-3">
+        {% for staff in object_list %} 
+        <table class="table table-hover">
+            <tr class="border border-3 rounded-2 my-2 py-3">
+                <td class="display-5">
+                    <a href="{% url 'staff:staff-detail' staff.id %}">{{ staff.name }}</a>
+                </td>
+                <td class="display-5 text-end">
+                    {{ staff.phone }}
+                </td>
+            </tr>
+        </table>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %} 

@@ -1,0 +1,92 @@
+{% extends 'staff/base.html' %} 
+{% load static %} 
+
+{% block title %}{{ object.name }}{% endblock %} 
+
+{% block content %} 
+<div class="container">
+    <div class="row">
+        <div class="g-3 display-4 text-center text-danger">
+            {{ object.name }} 
+        </div>
+    </div>
+    <hr>
+    <div class="row row-col-1 detail text-center">
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col text-end"><span class="label">State of Origin:</span></div>
+                <div class="col text-start">{{ object.state_of_origin }}</div>
+            </div>
+            
+            
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col text-end"><span class="label">Home Residence:</span></div>
+                <div class="col text-start">{{ object.home_residence }}</div>
+            </div>
+            
+            
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col text-end"><span class="label">Phone Number:</span></div>
+                <div class="col text-start">{{ object.phone }}</div>
+            </div>
+
+            
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col text-end"><span class="label">Email Address:</span></div>
+                <div class="col text-start">{{ object.email }}</div>
+            </div>
+            
+            
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col text-end"><span class="label">Date of Employment:</span></div>
+                <div class="col text-start">
+                    {% if object.is_employed %}
+                    {{ object.date_of_employment }}
+                    {% endif %}
+                </div>
+            </div>                       
+        </div>
+
+        {% if object.has_left %} 
+        <div class="col-12">
+            <div class="row">
+                <div class="col text-end"><span class="label">Date of Leaving:</span></div>
+                <div class="col text-start">{{ object.date_of_leave }}</div>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="col-12">
+            <div class="row">
+                <div class="col text-end"><span class="label">Active:</span></div>
+                <div class="col text-start">{{ object.active }}</div>
+            </div>
+            
+        </div>
+
+    </div>
+
+    <hr>
+    <div class="row mx-auto">
+        <div class="col-4 mx-2 btn btn-primary my-2 text-center py-3">
+            <a class="text-white" href="{% url 'staff:staff-list' %}">Back</a>
+        </div>
+        <div class="col-3 mx-2 btn btn-primary my-2 py-3 text-center">
+            <a class="text-white" href="{% url 'staff:staff-update' object.id %}">Update</a>
+        </div>
+        <div class="col-4 mx-2 btn btn-danger my-2 py-3 text-center">
+            <a class="text-white" href="{% url 'staff:staff-delete' object.id %}">Delete</a>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

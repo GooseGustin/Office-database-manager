@@ -1,0 +1,84 @@
+{% extends 'staff/base.html' %} 
+
+{% block title %}Register New Staff{% endblock %} 
+
+{% block content %} 
+
+<div class="container">
+    <div class="row display-2 crimson">
+        Register New Staff
+    </div>
+    <hr>
+    <form action="{% url 'staff:staff-create' %}" method="post">{% csrf_token %}
+        
+        {% if no_good_error %}
+        <div class="row detail text-danger">
+            {{ no_good_error }}
+        </div>
+        {% endif %}
+
+        <div class="row my-2">
+            <input type="text" name="name" 
+            class="form-control"
+            placeholder="Name">
+        </div>
+
+        <div class="row my-2">
+            <input type="text" 
+            name="state_of_origin" 
+            class="form-control" 
+            placeholder="State of origin">
+        </div>
+
+        <div class="row my-2">
+            <input type="text" 
+            name="phone" 
+            placeholder="Phone number"
+            class="form-control">
+        </div>
+
+        <div class="row my-2">
+            <input type="email" 
+            name="email" 
+            class="form-control" 
+            placeholder="Email">
+        </div>
+
+        <div class="row my-2">
+            <input type="text" 
+            name="home_residence" 
+            class="form-control" 
+            placeholder="Home residence">
+        </div>
+
+        <div class="row my-2">
+            <label for="date_of_employment">Date of employment</label>
+            <input type="date" 
+            name="date_of_employment" 
+            class="form-control"
+            placeholder="Date of Employment">
+        </div>
+
+        <div class="row my-2">
+            <label for="date_of_leave">Date of Leaving</label>
+            <input type="date" 
+            name="date_of_leave" 
+            class="form-control" >
+        </div>
+
+        <div class="row my-2 border p-2">
+            <label for="active"><input type="checkbox" name="active" id="active"
+            checked> Active</label>
+            
+        </div>
+
+        <div class="row">
+            <div class="col-5 mx-3 btn btn-secondary my-2 text-center py-3"><a class="text-white" href="../list/">Cancel</a></div>
+            <div class="col-5 mx-3 btn btn-success my-2"><button type="submit" class="mx-auto btn text-white my-2">Add</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

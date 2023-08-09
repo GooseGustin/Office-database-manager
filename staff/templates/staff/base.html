@@ -1,0 +1,67 @@
+{% load static %} 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Base{% endblock %}</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+    <style>
+        a, .crimson, th {
+            text-decoration: none;
+            color: crimson;
+        }
+        a:hover {
+            color: darkgreen;
+        }
+        .detail {
+            font-size: large;
+        }
+        .label {
+            font-weight: bold;
+        }
+    .footer>.row>.col>a {
+        color: gray;
+    }
+    .footer>.row>.col>a:hover {
+            color: rgb(11, 129, 129);
+        }
+    </style>
+</head>
+<body>
+    {% block content %} 
+        Base 
+    {% endblock %} 
+
+    <div class="footer">
+        <div class="row row-cols-4 my-5 p-3 text-muted bg-dark text-center">
+            <div class="col detail">
+                <a href="{% url 'core:home' %}">Home</a>
+            </div>
+            <div class="col detail">
+                <a href="{% url 'staff:staff-list' %}">Staff</a>
+            </div>
+            <div class="col detail">
+                <a href="{% url 'inventory:inventory-list' %}">Inventory</a>
+            </div>
+            <div class="col detail">
+                <a href="{% url 'sale:sale-list' %}">Sales</a>
+            </div>
+            <div class="col detail">
+                <a href="{% url 'job:job-list' %}">Jobs</a>
+            </div>
+            <div class="col detail">
+                <a href="{% url 'core:report' %}">Report</a>
+            </div>
+            <div class="col detail`">
+                <a href="{% url 'core:reminder' %}">Reminders</a>
+            </div>
+            <div class="col detail">
+                <a href="{% url 'core:help' %}">Help</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

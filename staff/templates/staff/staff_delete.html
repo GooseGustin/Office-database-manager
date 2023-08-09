@@ -1,0 +1,27 @@
+{% extends 'staff/base.html' %} 
+
+{% block title %}Delete {{ object.name }}{% endblock %} 
+
+{% block content %} 
+<div class="container">
+    <div class="row text-danger display-4">
+        Confirm Delete
+    </div>
+    <div class="row detail">
+        <p class="detail">Are you sure you want to delete this staff record?</p>
+        <p class="text-primary display-4">{{ object.name }}</p>
+        <div class="row">
+            <div class="col mx-2 btn btn-secondary py-3">
+                <a href="{% url 'staff:staff-detail' object.id %}"><span class="text-white">Cancel</span>
+                </a>
+            </div>
+
+            <div class="col mx-2 text-white btn btn-danger">
+                <form method="post" action="{% url 'staff:staff-delete' object.id %}">{% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Confirm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
