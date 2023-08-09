@@ -1,0 +1,34 @@
+{% extends './base.html' %} 
+
+{% block title %}Job List{% endblock %} 
+
+{% block content %} 
+<div class="container">
+
+    <div class="row g-3">
+        <div class="col display-1">All Jobs</div>
+        <div class="col mt-5"><a class="h4" href="{% url 'job:job-create' %}">Record New Job</a>
+        </div>
+        <div class="col mt-5"><a class="h4" href="{% url 'core:home' %}">Home</a></div>
+    </div>
+
+    <hr>
+
+    <div class="job my-3">
+        {% for job in object_list %} 
+        <table class="table table-hover">
+            <tr class="border border-3 rounded-2 my-2 py-3">
+                <td class="display-5">
+                    <p><a href="{% url 'job:job-detail' job.id %}">{{ job.date }}</a></p>
+                </td>
+                <td class="big-text ont-table text-end">
+                    {{ job.job_description|title }} at {{ job.location|title }}
+                </td>
+            </tr>
+        </table>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %} 

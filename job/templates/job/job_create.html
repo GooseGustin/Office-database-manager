@@ -1,0 +1,226 @@
+{% extends 'job/base.html' %} 
+
+{% block title %}Register New Job{% endblock %} 
+
+{% block content %} 
+
+<div class="container mt-2">
+    <div class="crimson display-4">Record a Job</div>
+    <hr>
+
+    <form action="{% url 'job:job-create' %}" method="post">{% csrf_token %} 
+
+        {% if some_error %} 
+        <div class="row detail text-danger">
+            {{ some_error }}
+        </div>
+        {% endif %}
+        
+        <div class="border p-2">
+            <div class="row"><span class="text-muted detail">Staff Assigned</span></div>
+            <div class="row row-cols-sm-2 row-cols-lg-3">
+                {% for staff in all_staff %} 
+                <div class="col">
+                    <div class="row m-2 border py-2 ">
+                        <div class="col mx-1 form-check">
+                            <input type="checkbox" name="{{ staff.name }}" id="{{ staff.name }}">
+                            <label for="{{ staff.name }}" class="form-check-label">{{ staff.name }}</label>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="row my-2 ">
+            <label for="date">
+                 <input type="date" 
+                name="date" 
+                class="form-control"
+                placeholder="Date">
+            </label>    
+            
+        </div>
+
+
+        <div class="row">
+            <label for="job_description">
+                <textarea name="job_description" 
+                    cols="30" rows="2" 
+                    class="form-control"
+                    placeholder="What is the nature of the job?"
+                    value=""></textarea>
+            </label>
+        </div>
+
+        <div class="row my-2 ">
+            <label for="location">
+                <input type="text" name="location" class="form-control" placeholder="Location">
+                
+            </label>
+        </div>
+
+        <div class="border p-2">
+            <!-- <div class="row"><span class="text-muted detail">Inventory Used</span></div> -->
+
+        <!-- inventory details  -->
+        <div class="goods-sold row py-3">
+            <div class="col">
+                <div class="row label">
+                    <div class="col-4 text-center">Inventory Used</div>
+                    <div class="col-4 text-center">Unit Price</div>
+                    <div class="col-4 text-center">Quantity</div>
+                </div>
+                {% for inv in all_inventory %} 
+                    <div class="row mx-2">
+                        <div class="col-5">
+                            <div class="row">
+                                <div class="col-2">
+                                    <input type="checkbox" id="{{ inv.name }}" name="{{ inv.name }}" class="form-check-input mx-1">
+                                </div> 
+                                    
+                                <div class="col-8 detail"><label for="{{ inv.name }}">{{ inv.name }}</label></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <input type="number" name="{{ inv.name }}_price" class="form-control" value="{{ inv.unit_price }}">
+                        </div>
+                        <div class="col-3">
+                            <input type="number" name="{{ inv.name }}_quantity" class="form-control">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+        <!-- serial numbers -->
+        <div class="row my-2">
+            <label for="">
+                <div class="row"><span class="text-muted detail">Battery Serial Numbers</span></div>
+                <div class=" border border-danger p-2 rounded">
+                    {% for bat in battery_inv %} 
+                    <div class="row">
+                        <div class="col-4">{{ bat.name }}</div>
+                        <div class="col-7">
+                            <textarea name="{{ bat.name }}_serials" 
+                                cols="30" rows="2"
+                                placeholder="serial_num1, serial_num2, ..."
+                                class="form-control small"></textarea>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </label>
+        </div>
+        
+        <div class="row my-2">
+            <label for="">
+                <div class="row"><span class="text-muted detail">Inverter Serial Numbers</span></div>
+                <div class=" border border-danger p-2 rounded">
+                    {% for inverter in inverter_inv %} 
+                    <div class="row">
+                        <div class="col-4">{{ inverter.name }}</div>
+                        <div class="col-7">
+                            <textarea name="{{ inverter.name }}_serials" 
+                                cols="30" rows="2"
+                                placeholder="serial_num1, serial_num2, ..."
+                                class="form-control small"></textarea>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </label>
+        </div>
+
+        <div class="row my-2">
+            <label for="other_items">
+                <div class="row"><span class="text-muted detail">Other Items Bought</span></div>
+                <input type="text" 
+                    name="other_items" 
+                    class="form-control"
+                    placeholder="Eg, Tape, Board, Truncking, etc">
+            </label>
+        </div>
+
+        <div class="row my-2">
+            <label for="other_items_costs" class="my-2">
+                <div class="row"><span class="text-muted detail">Other Items' Costs</span></div>
+                <input type="text" name="other_items_costs" 
+                    class="form-control"
+                    placeholder="Eg, 200, 1000, 1500, etc">
+            </label>
+        </div>
+
+        <div class="row my-2">
+            <label for="transportation_cost">
+                <input 
+                    type="number" 
+                    name="transportation_cost" 
+                    placeholder="Transportation Cost"
+                    class="form-control">
+            </label>
+        </div>
+
+
+        <div class="row my-2">
+            <label for="job_status">
+                <div class="row border p-2 mx-auto">
+                <div class="col-4"><span class="text-muted ">Job Status</span></div>
+                <div class="col-8">
+                    <select name="job_status" class="form-control">
+                    {% for status in all_job_statuses %}
+                        <option value="{{ status }}">{{ status }}</option>
+                    {% endfor %}
+                </select></div>
+                </div>
+            </label>
+        </div>
+
+
+        <div class="row my-2">
+            <label for="customer_name">
+                <input type="text" 
+                    name="customer_name" 
+                    placeholder="Customer Name"
+                    class="form-control">
+            </label>
+        </div>
+
+        <div class="row my-2">
+            <label for="customer_phone">
+                <input type="text" 
+                    name="customer_phone" 
+                    placeholder="Customer Phone"
+                    class="form-control">
+            </label>
+        </div>
+
+        <div class="row my-2">
+            <label for="customer_charge">
+                <input type="number" 
+                    name="customer_charge" 
+                    placeholder="Customer Fee"
+                    class="form-control">
+            </label>
+        </div>
+
+        <div class="row my-2">
+            <label for="remark">
+                <textarea name="remark" 
+                    class="form-control" 
+                    placeholder="Details"
+                    cols="30" rows="1"></textarea>
+            </label>
+        </div>
+
+
+        <div class="row">
+            <div class="col-5 mx-3 btn btn-secondary my-2 text-center pt-4"><a class="text-white" href="../list/">Cancel</a></div>
+            <div class="col-5 mx-3 btn btn-success my-2"><button type="submit" class="mx-auto btn text-white my-2">Save</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %} 

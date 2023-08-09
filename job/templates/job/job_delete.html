@@ -1,0 +1,27 @@
+{% extends 'job/base.html' %} 
+
+{% block title %}Delete Job{% endblock %} 
+
+{% block content %} 
+<div class="container">
+    <div class="row display-4">
+        Confirm Delete
+    </div>
+    <div class="row">
+        <p class="detail">Are you sure you want to delete this record?</p>
+        <p class="text-primary display-4">{{ object.date }}</p>
+        <p class="text-primary display-4">{{ object.job_description }} at {{ object.location|title }}</p>
+        <div class="row">
+            <div class="col mx-2 btn btn-secondary py-3">
+                <a href="{% url 'job:job-detail' object.id %}"><span class="text-white">Cancel</span>
+                </a>
+            </div>
+            <div class="col mx-2 text-white btn btn-danger">
+                <form method="post" action="{% url 'job:job-delete' object.id %}">{% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Confirm</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

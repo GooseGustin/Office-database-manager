@@ -1,0 +1,198 @@
+{% extends 'job/base.html' %} 
+{% load custom_tags %}
+{% block title %}Job Detail{% endblock %} 
+
+{% block content %} 
+
+<div class="container">
+    <!-- job data  -->
+    <div class="row rounded m-2 g-4">
+        <div class="row display-2">
+            Job carried out on {{ object.date }}
+        </div>
+        <hr>
+        <!-- staff assigned -->
+        <div class="row crimson label detail">
+            Staff Assigned:
+        </div>
+        <div class="row row-cols-sm-2 row-cols-lg-3">
+            {% for staff in all_staff %}
+            <div class="col detail">{{ staff }}</div>
+            {% endfor %}
+        </div>
+        <hr>
+        <!-- location -->
+        <div class="row crimson label detail">
+            Location:
+        </div>
+        <div class="row detail">
+            <div class="col">{{ object.location|title }}</div>
+        </div>
+        <hr>
+        <!-- job description  -->
+        <div class="row crimson label detail">
+            Description:
+        </div>
+        <div class="row detail">
+            <div class="col">{{ object.job_description }}</div>
+        </div>
+        <hr>
+        <!-- goods -->
+        <div class="row detail">
+            {% if zipped1 %} 
+                <table class="table table-hover">
+                    <tr>
+                        <th>Good sold</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                    </tr>
+                    {% for inv, price, quantity in zipped1 %}
+                    <tr>
+                        <td>
+                            {{ inv }}
+                        </td>
+                        <td>
+                            {{ price }}
+                        </td>
+                        <td>
+                            {{ quantity }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    
+                </table>
+            {% endif %}
+
+            {% if zipped2 %}
+                <table class="table table-hover">
+                    <tr>
+                        <th>Other Items</th>
+                        <th></th>
+                        <th>Costs</th>
+                    </tr>
+                    <tr>
+                        <td>Transportation</td>
+                        <td></td>
+                        <td>{{ object.transportation_cost }}</td>
+                    </tr>
+                    {% for item, cost in zipped2 %}
+                    <tr>
+                        <td>
+                            {{ item }}
+                        </td>
+                        <td></td>
+                        <td>
+                            {{ cost }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="table-success">
+                        <th scope="row">Total:</th>
+                        <td></td>
+                        <td>{{ object.total_expenses }}</td>
+                    </tr>
+                </table>
+            {% else %}
+                <table class="table table-hover">
+                    <tr class="table-success">
+                        <th scope="row">Total:</th>
+                        <td></td>
+                        <td>{{ object.total_expenses }}</td>
+                    </tr>
+                </table>
+            {% endif %}
+
+
+        </div>
+        <hr>
+
+        <!-- Serial Numbers -->
+        <div class="row crimson label detail">
+            Battery Serial Numbers:
+        </div>
+        <div class="row detail">
+            {% for batt in battery_serials %}
+            {% if battery_serials|get_value:batt %}
+                <p><span class="thick">{{ batt }}:</span> {{ battery_serials|get_value:batt }}</p>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <hr>
+
+        <div class="row crimson label detail">
+            Inverter Serial Numbers:
+        </div>
+        <div class="row detail">
+            {% for invt in inverter_serials %}
+            {% if inverter_serials|get_value:invt %}
+                <p><span class="thick">{{ invt }}:</span> {{ inverter_serials|get_value:invt }}</p>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <!-- fin -->
+
+        <!-- <div class="row crimson label detail">
+            Battery Serial Numbers:
+        </div>
+        <div class="row detail">
+            {% for batt in object.battery_serials %}
+                <p><span class="thick">{{ batt }}:</span> {{ battery_serials|get_value:batt }}</p>
+            {% endfor %}
+        </div>
+        <hr>
+
+        <div class="row crimson label detail">
+            Inverter Serial Numbers:
+        </div>
+        <div class="row detail">
+            {% for invt in inverter_inv %}
+                <p><span class="thick">{{ invt }}:</span> {{ inverter_serials|get_value:invt }}</p>
+            {% endfor %}
+            <div class="col">{{ object.inverter_serials }}</div>
+        </div> -->
+        <hr>
+
+        <!-- job status  -->
+        <div class="row crimson label detail">
+            Status:
+        </div>
+        <div class="row detail">
+            <div class="col">{{ object.job_status }}</div>
+        </div>
+        <hr>
+        <!-- customer -->
+        <table class="table detail">
+            <tr>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Fee</th>
+            </tr>
+            <tr>
+                <td>{{ object.customer_name }}</td>
+                <td>{{ object.customer_phone }}</td>
+                <td>{{ object.customer_charge }}</td>
+            </tr>
+        </table>
+        <div class="row detail">
+            <div class="col-auto label crimson">Remark:</div>
+            <div class="col detail">{{ object.remark }}</div>
+        </div>
+    </div>
+
+    <!-- footer buttons  -->
+    <hr class="">
+
+    <div class="row">
+        <div class="col-3 mx-1 btn btn-primary my-2 text-center py-3">
+            <a class="text-white" href="{% url 'job:job-list' %}">Back</a>
+        </div>
+        <div class="col-3 mx-auto btn btn-primary my-2 text-center py-3">
+            <a class="text-white" href="{% url 'job:job-update' object.id %}">Update</a>
+        </div>
+        <div class="col-3 mx-1 btn btn-danger my-2 text-center py-3">
+            <a class="text-white" href="{% url 'job:job-delete' object.id %}">Delete</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
