@@ -1,0 +1,95 @@
+{% extends 'sale/base.html' %} 
+{% load custom_tags %} 
+
+{% block title %}Sale Detail{% endblock %} 
+
+{% block content %} 
+
+<div class="container">
+    <!-- Sale data  -->
+    <div class="row rounded m-2 g-3">
+        <div class="row display-2">
+         Sold on {{ object.date }}
+        </div>
+        <hr>
+        <div class="row font-table">
+            <table class="table table-hover">
+                <tr>
+                    <th>Good sold</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+                {% for inv, price, quantity in zipped %}
+                <tr>
+                    <td>
+                        {{ inv }}
+                    </td>
+                    <td>
+                        {{ price }}
+                    </td>
+                    <td>
+                        {{ quantity }}
+                    </td>
+                </tr>
+                {% endfor %}
+                <tr class="table-success">
+                    <th scope="row">Total:</th>
+                    <td></td>
+                    <td>{{ object.total }}</td>
+                </tr>
+            </table>
+        </div>
+        <hr>
+
+        <!-- Serial Numbers -->
+        <div class="row crimson label detail">
+            Battery Serial Numbers:
+        </div>
+        <div class="row detail">
+            {% for batt in battery_inv %}
+                <p><span class="thick">{{ batt }}:</span> {{ batt_serials|get_value:batt }}</p>
+            {% endfor %}
+        </div>
+        <hr>
+
+        <div class="row crimson label detail">
+            Inverter Serial Numbers:
+        </div>
+        <div class="row detail">
+            {% for invt in inverter_inv %}
+                <p><span class="thick">{{ invt }}:</span> {{ invt_serials|get_value:invt }}</p>
+            {% endfor %}
+        </div>
+        <!-- <hr> -->
+
+        <div class="row mt-3">
+            <hr>
+            <div class="col-auto label crimson">Customer:</div>
+            <div class="col detail">{{ object.customer_name }}</div>
+            <div class="col-auto label crimson">Phone:</div>
+            <div class="col detail">{{ object.customer_phone }}</div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-auto label crimson">Details:</div>
+            <div class="col detail">{{ object.details }}</div>
+        </div>
+    </div>
+
+    <!-- footer buttons  -->
+    <hr class="mb-5">
+
+    <div class="row">
+        <div class="col-3 mx-1 btn btn-primary my-2 text-center py-3">
+            <a class="text-white" href="{% url 'sale:sale-list' %}">Back</a>
+        </div>
+        <div class="col-3 mx-auto btn btn-primary my-2 text-center py-3">
+            <a class="text-white" href="{% url 'sale:sale-update' object.id %}">Update</a>
+        </div>
+        <div class="col-3 mx-1 btn btn-danger my-2 text-center py-3">
+            <a class="text-white" href="{% url 'sale:sale-confirm-delete' object.id %}">Delete</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

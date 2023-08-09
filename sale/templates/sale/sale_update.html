@@ -1,0 +1,134 @@
+{% extends 'sale/base.html' %} 
+{% load custom_tags %} 
+
+{% block title %}Record A Sale{% endblock %} 
+
+{% block content %} 
+
+<div class="container">
+    <div class="row display-2 crimson">
+        Update This Sale
+    </div>
+    <hr>
+    <form action="{% url 'sale:sale-update' object.id %}" method="post">{% csrf_token %}
+        
+        {% if no_good_error %}
+        <div class="row detail text-danger">
+            {{ no_good_error }}
+        </div>
+        {% endif %}
+
+        <div class="goods-sold row border py-3">
+            <div class="col">
+                <div class="row label">
+                    <div class="col-4 text-center">Good Sold</div>
+                    <div class="col-4 text-center">Unit Price</div>
+                    <div class="col-4 text-center">Quantity</div>
+                </div>
+                {% for inv, quant in zipped %} 
+                    <div class="row mx-2">
+                        <div class="col form-check">
+                            <input type="checkbox" 
+                            name="{{ inv.name }}" 
+                            id="{{ inv.name }}"
+                            class="form-check-input mx-1" 
+                            {% if inv.name in object.goods_sold %}checked{% endif %}
+                            >
+                            <label for="{{ inv.name }}" class="form-check-label">{{ inv.name }}</label>
+                        </div>
+                        <div class="col">
+                            <input type="number" 
+                            name="{{ inv.name }}_price" 
+                            class="form-control" 
+                            value="{{ inv.unit_price }}">
+                        </div>
+                        <div class="col">
+                            <input type="number" 
+                            name="{{ inv.name }}_quantity" 
+                            class="form-control"
+                            {% if inv.name in all_sale_quantities.keys %}
+                                value="{{ quant }}"
+                            {% endif %}>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- serial numbers -->
+        <div class="row my-2">
+            <label for="">
+                <div class="row"><span class="text-muted detail">Battery Serial Numbers</span></div>
+                <div class=" border border-danger p-2 rounded">
+                    {% for battery in battery_inv %} 
+                    <div class="row">
+                        <div class="col-4">{{ battery }}</div>
+                        <div class="col-7">
+                            <textarea name="{{ battery }}_serials" 
+                                cols="30" rows="2"
+                                placeholder="serial_num1, serial_num2, ..."
+                                class="form-control small">{% if obj_batt_serials|get_value:battery %}{{ obj_batt_serials|get_value:battery }}{% else %}{% endif %}</textarea>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </label>
+        </div>
+
+        <div class="row my-2">
+            <label for="">
+                <div class="row"><span class="text-muted detail">Inverter Serial Numbers</span></div>
+                <div class=" border border-danger p-2 rounded">
+                    {% for inverter in inverter_inv %} 
+                    <div class="row">
+                        <div class="col-4">{{ inverter }}</div>
+                        <div class="col-7">
+                            <textarea name="{{ inverter }}_serials" 
+                                cols="30" rows="2"
+                                placeholder="serial_num1, serial_num2, ..."
+                                class="form-control small">{% if obj_invt_serials|get_value:inverter %}{{ obj_invt_serials|get_value:inverter }}{% else %}{% endif %}</textarea>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </label>
+        </div>
+
+        <div class="row date my-2">
+            <input type="date" name="date" class="form-control"
+            value="{{ obj_date }}">
+        </div>
+
+        <div class="row customer_name my-2">
+            <input type="text" 
+            name="customer_name" 
+            class="form-control" 
+            placeholder="Customer name"
+            value="{{ object.customer_name }}">
+        </div>
+
+        <div class="row customer_phone my-2">
+            <input type="text" 
+            name="customer_phone" 
+            class="form-control"
+            placeholder="Customer phone" 
+            value="{{ object.customer_phone }}">
+        </div>
+
+        <div class="row details my-2">
+            <input type="text" name="details" 
+            class="form-control"
+            placeholder="Details (optional)"
+            value="{{ object.details }}">
+        </div>
+
+        <div class="row">
+            <div class="col-5 mx-3 btn btn-secondary my-2 text-center py-3"><a class="text-white" href="../">Cancel</a></div>
+            <div class="col-5 mx-3 btn btn-success my-2"><button type="submit" class="mx-auto btn text-white my-2">Save</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

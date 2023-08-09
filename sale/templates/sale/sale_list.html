@@ -1,0 +1,31 @@
+{% extends './base.html' %} 
+
+{% block title %}Sale List{% endblock %} 
+
+{% block content %} 
+<div class="container">
+
+    <div class="row g-3">
+        <div class="col display-1">All Sales</div>
+        <div class="col mt-5"><a class="h4" href="{% url 'sale:sale-create' %}">Record New Sale</a>
+        </div>
+        <div class="col mt-5"><a class="h4" href="{% url 'core:home' %}">Home</a></div>
+    </div>
+
+    <hr>
+
+    <div class="sale my-3">
+        {% for sale in object_list %} 
+        <table class="table table-hover">
+            <tr class="border border-3 rounded-2 my-2 py-3">
+                <td class="display-5">
+                    <a href="{% url 'sale:sale-detail' sale.id %}">{{ sale.date }}</a>
+                </td>
+            </tr>
+        </table>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %} 

@@ -1,0 +1,131 @@
+{% extends 'sale/base.html' %} 
+
+{% block title %}Record A Sale{% endblock %} 
+
+{% block content %} 
+
+<div class="container">
+    <div class="row display-2 crimson">
+        Record A Sale
+    </div>
+    <hr>
+    <form action="{% url 'sale:sale-create' %}" method="post">{% csrf_token %}
+        
+        {% if no_good_error %} 
+        <div class="row detail text-danger">
+            {{ no_good_error }}
+        </div>
+        {% endif %}
+        
+        <!-- inventory details  -->
+        <div class="goods-sold row py-3 border">
+            <div class="col">
+                <div class="row label">
+                    <div class="col-4 text-center">Good Sold</div>
+                    <div class="col-4 text-center">Unit Price</div>
+                    <div class="col-4 text-center">Quantity</div>
+                </div>
+                {% for inv in all_inv_names %} 
+                    <div class="row mx-2">
+                        <div class="col-5">
+                            <div class="row">
+                                <div class="col-2">
+                                    <input type="checkbox" name="{{ inv.name }}" class="form-check-input mx-1"
+                                    id="{{ inv.name }}">
+                                </div> 
+                                <div class="col-8">
+                                    <label for="{{ inv.name }}" class="form-check-label">{{ inv.name }}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <input type="number" name="{{ inv.name }}_price" class="form-control" value="{{ inv.unit_price }}">
+                        </div>
+                        <div class="col-3">
+                            <input type="number" name="{{ inv.name }}_quantity" class="form-control">
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- serial numbers -->
+        <div class="row my-2">
+            <label for="">
+                <div class="row"><span class="text-muted detail">Battery Serial Numbers</span></div>
+                <div class=" border border-danger p-2 rounded">
+                    {% for bat in battery_inv %} 
+                    <div class="row">
+                        <div class="col-4">{{ bat.name }}</div>
+                        <div class="col-7">
+                            <textarea name="{{ bat.name }}_serials" 
+                                cols="30" rows="2"
+                                placeholder="serial_num1, serial_num2, ..."
+                                class="form-control small"></textarea>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </label>
+        </div>
+
+        <div class="row my-2">
+            <label for="">
+                <div class="row"><span class="text-muted detail">Inverter Serial Numbers</span></div>
+                <div class=" border border-danger p-2 rounded">
+                    {% for inverter in inverter_inv %} 
+                    <div class="row">
+                        <div class="col-4">{{ inverter.name }}</div>
+                        <div class="col-7">
+                            <textarea name="{{ inverter.name }}_serials" 
+                                cols="30" rows="2"
+                                placeholder="serial_num1, serial_num2, ..."
+                                class="form-control small"></textarea>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </label>
+        </div>
+
+        <div class="row details my-2">
+            <label for="details">
+                <textarea 
+                name="details" 
+                class="form-control" 
+                cols="30" 
+                rows="4"
+                placeholder="Details"></textarea>
+            </label>
+        </div>
+
+        <!-- customer details  -->
+        <div class="row customer_name mx-auto my-2">
+            <input type="text" 
+            name="customer_name" 
+            placeholder="Customer Name"
+            class="form-control" >
+        </div>
+
+        <div class="row customer_phone mx-auto my-2">
+            <input type="text" 
+            name="customer_phone" 
+            placeholder="Customer Phone Number"
+            class="form-control" >
+        </div>
+
+        <div class="row date mx-auto my-2">
+            <input type="date" name="date" class="form-control" >
+        </div>
+
+
+        <div class="row">
+            <div class="col-5 mx-3 btn btn-secondary my-2 text-center pt-3"><a class="text-white" href="../list/">Cancel</a></div>
+            <div class="col-5 mx-3 btn btn-success my-2"><button type="submit" class="mx-auto btn text-white my-2">Save</button>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}
